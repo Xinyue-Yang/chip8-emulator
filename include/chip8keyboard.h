@@ -5,7 +5,9 @@
 #include "config.h"
 struct chip8_keyboard
 {
+    // a bool list keeping track of whether the keys are down or up. True for down and False for up.
     bool keyboard[CHIP8_TOTAL_KEYS];
+    // a list mapping the virtual 0~F keys to physical keys on the computer
     const char* keyboard_map;
 };
 
