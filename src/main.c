@@ -4,6 +4,7 @@
 #include "SDL.h"
 #include "chip8.h"
 
+// a virtual keyboard correspondence
 const char keyboard_map[CHIP8_TOTAL_KEYS] = 
 {
     '0', '1', '2', '3', 
