@@ -6,6 +6,7 @@
 #include <time.h>
 #include "SDL.h"
 
+//the keyboard countains 16 characters, from 0 ~ F
 const char chip8_default_character_set[] =
 {
     0xf0, 0x90, 0x90, 0x90, 0xf0, //0
@@ -26,16 +27,17 @@ const char chip8_default_character_set[] =
     0xf0, 0x80, 0xf0, 0x80, 0x80  //F
 };
 
-//copy the sprites to the memory, starting from 0x00
+//copy the character sprites to the memory, starting from 0x00
 void chip8_init(struct chip8* chip8)
 {
     memset(chip8, 0, sizeof(struct chip8));
     memcpy(*chip8->memory.memory, chip8_default_character_set, sizeof(chip8_default_character_set));
 }
 
+//load the program from buf
 void chip8_load(struct chip8* chip8, const char* buf, size_t size)
 {
-    //check if the program size is too large
+    //check if the program size is too large; exit if it is
     assert (size + CHIP8_PROGRAM_LOAD_ADDRESS < CHIP8_MEMORY_SIZE);
     memcpy (&chip8->memory.memory[CHIP8_PROGRAM_LOAD_ADDRESS], buf, size);
     //set the PC at the start of the program
@@ -64,6 +66,7 @@ static char chip8_wait_for_keypress(struct chip8* chip8)
     return -1;
 }
 
+//execute instructions starting with 8
 static void chip8_exec_case_eight(struct chip8* chip8, unsigned short opcode)
 {
     unsigned char x = (opcode >> 8) & 0x000f;
@@ -128,6 +131,7 @@ static void chip8_exec_case_eight(struct chip8* chip8, unsigned short opcode)
     }
 }
 
+//execute instructions starting with E
 static void chip8_exec_case_E(struct chip8* chip8, unsigned short opcode)
 {
     unsigned char x = (opcode >> 8) & 0x000f;
@@ -152,6 +156,7 @@ static void chip8_exec_case_E(struct chip8* chip8, unsigned short opcode)
     }
 }
 
+//execute instructions starting with F
 static void chip8_exec_case_F(struct chip8* chip8, unsigned short opcode)
 {
     unsigned char x = (opcode >> 8) & 0x000f;
@@ -223,6 +228,7 @@ static void chip8_exec_case_F(struct chip8* chip8, unsigned short opcode)
 
 }
 
+//execute all instructions given opcode
 static void chip8_exec_extended(struct chip8* chip8, unsigned short opcode)
 {
     unsigned short nnn = opcode & 0x0fff;
@@ -326,6 +332,7 @@ static void chip8_exec_extended(struct chip8* chip8, unsigned short opcode)
     }
 }
 
+//execute basic instructions, others are handled by chip8_exec_extended
 void chip8_exec(struct chip8* chip8, unsigned short opcode)
 {
     switch(opcode)
