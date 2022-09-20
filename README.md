@@ -5,6 +5,6 @@ Chip-8 is a programming language which was first used on some do-it-yourself com
 
 The project implemented a virtual machine that can run classic chip8 games, such as PONG and PACMAN. In order to run the virtual machine, please first download SDL2.
 
-#Reference
+# Reference
 You are welcome to download the game from https://www.reddit.com/r/EmuDev/comments/eb2nac/the_chip8_archive_a_collection_of_modern_chip8/.
 Reference: http://devernay.free.fr/hacks/chip8/C8TECH10.HTM. The document describes the Chip-8 system, including memory, registers, display, keyboard, and timers. There's also a complete opcode instruction sets.
