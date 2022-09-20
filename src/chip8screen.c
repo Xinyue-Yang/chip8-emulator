@@ -2,29 +2,33 @@
 #include <assert.h>
 #include <memory.h>
 
-//check if (x, y) is out of bound
+//checks if (x, y) is out of bound
 static void chip_screen_check_bounds(int x, int y)
 {
     assert(x >= 0 && x < CHIP8_WIDTH && y >= 0 && y < CHIP8_HEIGHT);
 }
 
+//clears the screen to blank state (all black)
 void chip8_screen_clear(struct chip8_screen* screen)
 {
     memset(screen->pixels, 0, sizeof(screen->pixels));
 }
 
+//set the pixel at (x, y) to white
 void chip8_screen_set(struct chip8_screen* screen, int x, int y)
 {
     chip8_screen_check_bounds(x, y);
     screen->pixels[y][x] = true;
 }
 
+//checks if the pixel at (x, y) is white
 bool chip8_screen_is_set(struct chip8_screen* screen, int x, int y)
 {
     chip8_screen_check_bounds(x, y);
     return screen->pixels[y][x];
 }
 
+//draws one of the sprites from 0~F to the screen. The top-left corner is at (x, y).
 //num = number of rows need to draw in a sprite
 bool chip8_screen_draw_sprite(struct chip8_screen* screen, int x, int y, const char* sprite, int num)
 {
